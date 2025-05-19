@@ -9,6 +9,7 @@ public class UINavigation : MonoBehaviour
     public GameObject panelInício;
     [SerializeField] private Button[] buttons;
     [SerializeField] private GameObject[] border;
+    private bool selectedCharacter = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,13 +18,6 @@ public class UINavigation : MonoBehaviour
             b.SetActive(false);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Iniciar()
     {
         SceneManager.LoadScene("SeleçãoPersonagem");
@@ -43,8 +37,11 @@ public class UINavigation : MonoBehaviour
         }*/
         for (int i = 0; i < border.Length; i++)
         {
-            border[i].SetActive(i == index); 
+            border[i].SetActive(i == index);
+            selectedCharacter = true;
         }
+
+        PlayerPrefs.SetInt("PersonagemSelecionado", index);
     }
 
     public void Jogar()
@@ -53,7 +50,10 @@ public class UINavigation : MonoBehaviour
 
         //if (buttons[4] != null && buttons[personagem] != null)
         //{
+        if (selectedCharacter)
+        {
             SceneManager.LoadScene("Game");
+        }
         //}
     }
 }

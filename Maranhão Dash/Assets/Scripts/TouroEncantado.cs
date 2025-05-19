@@ -6,19 +6,13 @@ public class TouroEncantado : MonoBehaviour
 {
     public GameObject [] quizPanel;
     private int pergunta;
-    private Perguntas validacaoPergunta;
+    [SerializeField] private Perguntas[] validacaoPergunta;
 
     // Start is called before the first frame update
     void Start()
     {
-        pergunta = Random.Range(1, 5);
-        validacaoPergunta = FindObjectOfType<Perguntas>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        pergunta = Random.Range(0, 4);
+        validacaoPergunta = FindObjectsOfType<Perguntas>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -26,12 +20,12 @@ public class TouroEncantado : MonoBehaviour
         if (quizPanel != null) {
             quizPanel[pergunta].SetActive(true);
 
-            if (validacaoPergunta.IsRight)
+            if (validacaoPergunta[pergunta].IsRight)
             {
-                validacaoPergunta.RespostaCerta();
+                validacaoPergunta[pergunta].RespostaCerta();
             } else
             {
-                validacaoPergunta.RespostaErrada();
+                validacaoPergunta[pergunta].RespostaErrada();
             }
         }
     }

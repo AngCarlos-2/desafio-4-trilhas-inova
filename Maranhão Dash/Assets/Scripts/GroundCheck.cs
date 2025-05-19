@@ -12,12 +12,6 @@ public class GroundCheck : MonoBehaviour
         player = FindObjectOfType<Player>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (player != null && collision.gameObject.layer == 3)

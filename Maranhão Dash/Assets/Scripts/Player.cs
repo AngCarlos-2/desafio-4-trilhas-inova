@@ -16,8 +16,8 @@ public class Player : MonoBehaviour
     private bool isJumping = false;
     private Rigidbody2D rig;
     private GroundCheck groundChecked;
-    public Perguntas gameOverValidation;
 
+    public Perguntas gameOverValidation;
     public bool isPlaying = true;
     public float JumpForce;
     public TextMeshProUGUI textDistancia;
@@ -26,15 +26,23 @@ public class Player : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         Time.timeScale = 1f;
         rig = GetComponent<Rigidbody2D>();
         groundChecked = GetComponentInChildren<GroundCheck>();
+
+        textDistancia = FindAnyObjectByType<TextMeshProUGUI>();
+        textMaiorDistancia = FindAnyObjectByType<TextMeshProUGUI>();
+        gameOverValidation = FindAnyObjectByType<Perguntas>();
 
         tempoInicial = Time.time;
         maiorDistancia = PlayerPrefs.GetInt("MaiorDistancia", 0);
         textMaiorDistancia.text = maiorDistancia.ToString();
 
+        if (textMaiorDistancia != null)
+            textMaiorDistancia.text = maiorDistancia.ToString();
+        else
+            Debug.LogWarning("textMaiorDistancia não foi encontrado na cena!");
     }
 
     // Update is called once per frame
@@ -70,15 +78,18 @@ public class Player : MonoBehaviour
 
     void GameOver ()
     {
-        if (gameOverValidation.Gameover)
-        {
-            isPlaying = false;
-
-            if (distanciaMax > maiorDistancia)
+        if (gameOverValidation != null) {
+            if (gameOverValidation.Gameover)
             {
-                maiorDistancia = distanciaMax;
-                PlayerPrefs.SetInt("MaiorDistancia", maiorDistancia);
-                PlayerPrefs.Save();
+                isPlaying = false;
+
+                if (distanciaMax > maiorDistancia)
+                {
+                    maiorDistancia = distanciaMax;
+                    PlayerPrefs.SetInt("MaiorDistancia", maiorDistancia);
+                    PlayerPrefs.Save();
+                    
+                }
             }
         }
     }
