@@ -31,6 +31,7 @@ public class Perguntas : MonoBehaviour
     public void RespostaCerta()
     {
         panelQuiz.SetActive(false);
+        GameOverScreen.SetActive(false);
         Time.timeScale = 1;
         IsRight = true;
 
@@ -54,12 +55,16 @@ public class Perguntas : MonoBehaviour
 
     public void RespostaErrada() 
     {
-        panelQuiz.SetActive(false);
-        if (GameOverScreen != null)
+        isRight = false;
+        if (!IsRight)
         {
-            GameOverScreen.SetActive(true);
+            panelQuiz.SetActive(false);
             Gameover = true;
-            player.GameOver();
+            if (GameOverScreen != null && Gameover)
+            {
+                GameOverScreen.SetActive(true);
+                player.GameOver();
+            }
         }
     }
 }
