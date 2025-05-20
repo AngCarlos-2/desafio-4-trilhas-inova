@@ -59,6 +59,7 @@ public class Perguntas : MonoBehaviour
         {
             GameOverScreen.SetActive(true);
             Gameover = true;
+            player.GameOver();
         }
     }
 }

@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     public bool isPlaying = true;
     public float JumpForce;
     public TextMeshProUGUI textDistancia;
-    public TextMeshProUGUI textMaiorDistancia;
+    [SerializeField] private TextMeshProUGUI textMaiorDistancia;
     public bool IsJumping { get => isJumping; set => isJumping = value; }
 
     // Start is called before the first frame update
@@ -32,17 +32,11 @@ public class Player : MonoBehaviour
         groundChecked = GetComponentInChildren<GroundCheck>();
 
         textDistancia = FindAnyObjectByType<TextMeshProUGUI>();
-        textMaiorDistancia = FindAnyObjectByType<TextMeshProUGUI>();
+        // textMaiorDistancia = GameObject.Find("Text_MaiorDistância")?.GetComponent<TextMeshProUGUI>();
         gameOverValidation = FindAnyObjectByType<Perguntas>();
 
         tempoInicial = Time.time;
         maiorDistancia = PlayerPrefs.GetInt("MaiorDistancia", 0);
-        textMaiorDistancia.text = maiorDistancia.ToString();
-
-        if (textMaiorDistancia != null)
-            textMaiorDistancia.text = maiorDistancia.ToString();
-        else
-            Debug.LogWarning("textMaiorDistancia não foi encontrado na cena!");
     }
 
     // Update is called once per frame
@@ -56,7 +50,7 @@ public class Player : MonoBehaviour
         }
 
         isJumping = !groundChecked.IsGrounded();
-        GameOver();
+        // GameOver();
     }
 
     void CalcularDistancia()
@@ -76,21 +70,20 @@ public class Player : MonoBehaviour
         }
     }
 
-    void GameOver ()
+    public void GameOver ()
     {
-        if (gameOverValidation != null) {
-            if (gameOverValidation.Gameover)
-            {
-                isPlaying = false;
+        isPlaying = false;
 
-                if (distanciaMax > maiorDistancia)
-                {
-                    maiorDistancia = distanciaMax;
-                    PlayerPrefs.SetInt("MaiorDistancia", maiorDistancia);
-                    PlayerPrefs.Save();
-                    
-                }
-            }
+        if (distanciaMax > maiorDistancia)
+        {
+            maiorDistancia = distanciaMax;
+            PlayerPrefs.SetInt("MaiorDistancia", maiorDistancia);
+            PlayerPrefs.Save();
+        }
+
+        if (textMaiorDistancia != null)
+        {
+            textMaiorDistancia.text = maiorDistancia.ToString();
         }
     }
 

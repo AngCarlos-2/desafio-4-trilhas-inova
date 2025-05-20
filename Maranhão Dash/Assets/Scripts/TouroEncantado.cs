@@ -11,8 +11,8 @@ public class TouroEncantado : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pergunta = Random.Range(0, 4);
-        validacaoPergunta = FindObjectsOfType<Perguntas>();
+       pergunta = Random.Range(0, 4);
+       validacaoPergunta = FindObjectsOfType<Perguntas>(true);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
